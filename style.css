@@ -1,55 +1,81 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+
+  /* 🌈 animated gradient background */
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0ea5e9, #22c55e);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+
+  color: white;
   text-align: center;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
   max-width: 600px;
   padding: 20px;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.3);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 42px;
   margin-bottom: 10px;
 }
 
 p {
   font-size: 18px;
-  color: #cbd5e1;
-  margin-bottom: 20px;
+  color: #e2e8f0;
 }
 
 .button {
   display: inline-block;
+  margin-top: 20px;
   padding: 12px 25px;
-  background: #3b82f6;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f97316, #ef4444, #8b5cf6);
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  transition: 0.3s;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .button:hover {
-  background: #2563eb;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .tag {
   margin-top: 20px;
-  font-size: 14px;
-  color: #94a3b8;
+  font-size: 13px;
+  color: #cbd5e1;
 }
 
 #message {
-  margin-top: 20px;
+  margin-top: 15px;
   color: #22c55e;
   font-weight: bold;
+}
+
+/* 🐞 bug */
+.bug {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+  border-radius: 50%;
+  box-shadow: 0 0 10px red;
 }

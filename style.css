@@ -3,79 +3,49 @@ body {
   font-family: Arial, sans-serif;
   height: 100vh;
   overflow: hidden;
+
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0ea5e9, #22c55e);
+  background-size: 400% 400%;
+  animation: moveBg 10s ease infinite;
+
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* 🌈 animated gradient background */
-  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0ea5e9, #22c55e);
-  background-size: 400% 400%;
-  animation: gradientMove 10s ease infinite;
-
   color: white;
   text-align: center;
 }
 
-@keyframes gradientMove {
+@keyframes moveBg {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
 .container {
-  max-width: 600px;
+  background: rgba(0,0,0,0.4);
   padding: 20px;
+  border-radius: 15px;
   backdrop-filter: blur(10px);
-  background: rgba(0,0,0,0.3);
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
-
-h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 18px;
-  color: #e2e8f0;
 }
 
 .button {
   display: inline-block;
-  margin-top: 20px;
-  padding: 12px 25px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #f97316, #ef4444, #8b5cf6);
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.button:hover {
-  transform: scale(1.1);
-}
-
-.tag {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #cbd5e1;
-}
-
-#message {
   margin-top: 15px;
-  color: #22c55e;
-  font-weight: bold;
+  padding: 10px 20px;
+  background: #f97316;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-/* 🐞 bug */
+/* 🪲 REAL BUG STYLE */
 .bug {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background: red;
-  border-radius: 50%;
-  box-shadow: 0 0 10px red;
+  width: 40px;
+  height: 40px;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/616/616430.png");
+  background-size: cover;
+  pointer-events: auto;
+  transition: all 0.8s linear;
 }

@@ -1,38 +1,56 @@
-const message = document.getElementById("message");
+let score = 0;
+const scoreDisplay = document.getElementById("score");
 
-document.getElementById("enterBtn").addEventListener("click", function (e) {
-  e.preventDefault();
-  message.textContent = "🐞 Bugs activated!";
-});
-
-
-// 🪲 create bug
-function createBug(x, y) {
+// 🐞 spawn bug that crosses screen fast
+function spawnBug() {
   const bug = document.createElement("div");
   bug.classList.add("bug");
 
-  bug.style.left = x + "px";
-  bug.style.top = y + "px";
-
   document.body.appendChild(bug);
 
-  moveBug(bug);
+  const startY = Math.random() * window.innerHeight;
+  bug.style.top = startY + "px";
+  bug.style.left = "-60px";
+
+  let clickedOnce = false;
+
+  // movement speed
+  const speed = 6 + Math.random() * 4;
+
+  function move() {
+    let x = bug.offsetLeft + speed;
+    bug.style.left = x + "px";
+
+    // remove if out of screen
+    if (x > window.innerWidth + 60) {
+      bug.remove();
+    } else {
+      requestAnimationFrame(move);
+    }
+  }
+
+  move();
+
+  // 👆 click logic (2 clicks to kill)
+  bug.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    if (!clickedOnce) {
+      clickedOnce = true;
+      bug.style.filter = "brightness(2)";
+    } else {
+      // 💥 POP
+      bug.classList.add("pop");
+
+      setTimeout(() => {
+        bug.remove();
+      }, 300);
+
+      score++;
+      scoreDisplay.textContent = "Score: " + score;
+    }
+  });
 }
 
-
-// 🐞 realistic movement (smooth wandering)
-function moveBug(bug) {
-  setInterval(() => {
-    const x = bug.offsetLeft + (Math.random() * 200 - 100);
-    const y = bug.offsetTop + (Math.random() * 200 - 100);
-
-    bug.style.left = Math.max(0, Math.min(window.innerWidth - 40, x)) + "px";
-    bug.style.top = Math.max(0, Math.min(window.innerHeight - 40, y)) + "px";
-  }, 1000);
-}
-
-
-// click anywhere
-document.addEventListener("click", (e) => {
-  createBug(e.clientX, e.clientY);
-});
+// 🔁 spawn bugs continuously
+setInterval(spawnBug, 700);

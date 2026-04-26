@@ -1,7 +1,8 @@
-const btn = document.getElementById("enterBtn");
+const button = document.getElementById("enterBtn");
 const message = document.getElementById("message");
 
-btn.addEventListener("click", function (e) {
+button.addEventListener("click", function (e) {
   e.preventDefault();
-  message.textContent = "🚀 Projects section coming soon...";
+
+  message.textContent = "🚀 Welcome to my journey — Portfolio loading soon...";
 });

@@ -1,51 +1,37 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  height: 100vh;
   overflow: hidden;
-
-  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0ea5e9, #22c55e);
-  background-size: 400% 400%;
-  animation: moveBg 10s ease infinite;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: Arial;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0ea5e9);
   color: white;
-  text-align: center;
-}
-
-@keyframes moveBg {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 .container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
   background: rgba(0,0,0,0.4);
-  padding: 20px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-}
-
-.button {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #f97316;
-  color: white;
+  padding: 10px 15px;
   border-radius: 10px;
-  cursor: pointer;
-  text-decoration: none;
 }
 
-/* 🪲 REAL BUG STYLE */
+/* 🪲 bug */
 .bug {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   background-image: url("https://cdn-icons-png.flaticon.com/512/616/616430.png");
   background-size: cover;
-  pointer-events: auto;
-  transition: all 0.8s linear;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+/* 💥 pop animation */
+.pop {
+  animation: popAnim 0.3s forwards;
+}
+
+@keyframes popAnim {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
 }

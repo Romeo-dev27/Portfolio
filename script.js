@@ -1,13 +1,12 @@
 const message = document.getElementById("message");
 
-// Button click message
 document.getElementById("enterBtn").addEventListener("click", function (e) {
   e.preventDefault();
-  message.textContent = "🚧 Welcome! Bugs are now active...";
+  message.textContent = "🐞 Bugs activated!";
 });
 
 
-// 🐞 Create bug
+// 🪲 create bug
 function createBug(x, y) {
   const bug = document.createElement("div");
   bug.classList.add("bug");
@@ -21,19 +20,19 @@ function createBug(x, y) {
 }
 
 
-// 🐛 Move bug randomly
+// 🐞 realistic movement (smooth wandering)
 function moveBug(bug) {
   setInterval(() => {
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
+    const x = bug.offsetLeft + (Math.random() * 200 - 100);
+    const y = bug.offsetTop + (Math.random() * 200 - 100);
 
-    bug.style.left = x + "px";
-    bug.style.top = y + "px";
-  }, 800);
+    bug.style.left = Math.max(0, Math.min(window.innerWidth - 40, x)) + "px";
+    bug.style.top = Math.max(0, Math.min(window.innerHeight - 40, y)) + "px";
+  }, 1000);
 }
 
 
-// 🖱️ Click anywhere to spawn bug
-document.addEventListener("click", function (e) {
+// click anywhere
+document.addEventListener("click", (e) => {
   createBug(e.clientX, e.clientY);
 });

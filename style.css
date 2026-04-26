@@ -4,7 +4,6 @@ body {
   font-family: Arial, sans-serif;
   overflow: hidden;
 
-  /* 🌈 animated gradient background */
   background: linear-gradient(120deg, #0f172a, #1e1b4b, #0ea5e9, #22c55e, #8b5cf6);
   background-size: 400% 400%;
   animation: bgMove 12s ease infinite;
@@ -21,9 +20,10 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* 🌟 HERO CONTAINER */
+/* 🌟 HERO CARD */
 .hero {
   text-align: center;
+  padding: 40px;
 }
 
 .hero-content {
@@ -39,7 +39,7 @@ body {
     0 0 40px rgba(139, 92, 246, 0.2);
 }
 
-/* 🧑‍💻 PROFILE IMAGE */
+/* 🧑‍💻 profile picture */
 .profile-pic {
   width: 130px;
   height: 130px;
@@ -61,7 +61,7 @@ body {
   transform: scale(1.05);
 }
 
-/* ✨ TEXT */
+/* ✨ text styles */
 h1 {
   font-size: 42px;
   margin: 10px 0;
@@ -79,7 +79,7 @@ p {
   line-height: 1.5;
 }
 
-/* 🔘 BUTTONS */
+/* 🔘 buttons */
 .buttons {
   margin-top: 25px;
   display: flex;
@@ -110,7 +110,7 @@ p {
   transform: scale(1.08);
 }
 
-/* 💬 MESSAGE */
+/* message */
 #message {
   margin-top: 15px;
   color: #22c55e;

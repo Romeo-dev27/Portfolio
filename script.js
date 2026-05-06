@@ -1,6 +1,8 @@
 /* ========================================
-   DATASET — Code LaTeX brut (sans $$)
+   📐 FORMULES EXAM - script.js
    ======================================== */
+
+/* ---------- DATASET (Toutes les formules) ---------- */
 const DATASET = {
   chapters: [
     {
@@ -25,7 +27,8 @@ const DATASET = {
         { name: "Probabilité composée", latex: "P(A \\cap B) = P(A \\mid B)P(B) = P(B \\mid A)P(A)", conditions: "" },
         { name: "Formule des probabilités totales", latex: "P(B) = \\sum_{i=1}^n P(B \\mid A_i)P(A_i)", conditions: "$\\{A_1, \\dots, A_n\\}$ système complet d'événements" },
         { name: "Théorème de Bayes", latex: "P(A_j \\mid B) = \\frac{P(B \\mid A_j)P(A_j)}{\\sum_{i=1}^n P(B \\mid A_i)P(A_i)}", conditions: "Pour tout $j \\in \\{1, \\dots, n\\}$" },
-        { name: "Indépendance de deux événements", latex: "P(A \\cap B) = P(A)P(B)", conditions: "Équivalent à $P(A\\mid B)=P(A)$ si $P(B)>0$" }
+        { name: "Indépendance de deux événements", latex: "P(A \\cap B) = P(A)P(B)", conditions: "Équivalent à $P(A\\mid B)=P(A)$ si $P(B)>0$" },
+        { name: "Exactement un seul événement parmi A, B, C", latex: "(A \\cap \\bar{B} \\cap \\bar{C}) \\cup (\\bar{A} \\cap B \\cap \\bar{C}) \\cup (\\bar{A} \\cap \\bar{B} \\cap C)", conditions: "Un seul événement se réalise" }
       ]
     },
     {
@@ -77,22 +80,18 @@ const DATASET = {
   ]
 };
 
-/* ========================================
-   DOM
-   ======================================== */
-const tabsNav       = document.getElementById('tabs-nav');
-const contentArea   = document.getElementById('content-area');
-const searchInput   = document.getElementById('search-input');
-const clearBtn      = document.getElementById('clear-search');
-const searchCount   = document.getElementById('search-count');
-const themeToggle   = document.getElementById('theme-toggle');
-const toast         = document.getElementById('toast');
+/* ---------- DOM REFERENCES ---------- */
+const tabsNav     = document.getElementById('tabs-nav');
+const contentArea = document.getElementById('content-area');
+const searchInput = document.getElementById('search-input');
+const clearBtn    = document.getElementById('clear-search');
+const searchCount = document.getElementById('search-count');
+const themeToggle = document.getElementById('theme-toggle');
+const toast       = document.getElementById('toast');
 
 let activeTab = 0;
 
-/* ========================================
-   RENDER TABS
-   ======================================== */
+/* ---------- RENDER TABS ---------- */
 function renderTabs() {
   tabsNav.innerHTML = '';
   DATASET.chapters.forEach((ch, i) => {
@@ -111,9 +110,7 @@ function switchTab(index) {
   document.querySelectorAll('.chapter-section').forEach((s, i) => s.classList.toggle('active', i === index));
 }
 
-/* ========================================
-   RENDER CONTENT
-   ======================================== */
+/* ---------- RENDER CONTENT ---------- */
 function renderContent() {
   contentArea.innerHTML = '';
 
@@ -137,7 +134,7 @@ function renderContent() {
       card.className = 'formula-card';
       card.dataset.searchable = `${f.name} ${f.latex} ${f.conditions}`.toLowerCase();
 
-      // Badge numéro
+      // Badge
       const badge = document.createElement('span');
       badge.className = 'card-badge';
       badge.textContent = `#${fi + 1}`;
@@ -146,11 +143,10 @@ function renderContent() {
       const h3 = document.createElement('h3');
       h3.textContent = f.name;
 
-      // Latex : on met le texte brut avec délimiteurs $$ pour l'auto-render
+      // Latex (texte brut avec délimiteurs $$ pour l'auto-render)
       const latexDiv = document.createElement('div');
       latexDiv.className = 'latex';
       latexDiv.textContent = `$$${f.latex}$$`;
-      latexDiv.dataset.raw = f.latex; // version sans $$ pour le copier
 
       // Conditions
       const condP = document.createElement('p');
@@ -174,22 +170,17 @@ function renderContent() {
     contentArea.appendChild(section);
   });
 
-  // 🚀 IMPORTANT : on attend que KaTeX soit chargé avant de rendre
-  waitForKaTeX().then(() => {
-    renderAllMath();
-  });
+  // Attendre que KaTeX soit chargé puis rendre les maths
+  waitForKaTeX().then(() => renderAllMath());
 }
 
-/* ========================================
-   WAIT FOR KATEX (defer loading)
-   ======================================== */
+/* ---------- WAIT FOR KATEX ---------- */
 function waitForKaTeX() {
   return new Promise(resolve => {
     if (typeof katex !== 'undefined' && typeof renderMathInElement !== 'undefined') {
       resolve();
       return;
     }
-    // Vérifie toutes les 50ms
     const check = setInterval(() => {
       if (typeof katex !== 'undefined' && typeof renderMathInElement !== 'undefined') {
         clearInterval(check);
@@ -199,9 +190,7 @@ function waitForKaTeX() {
   });
 }
 
-/* ========================================
-   RENDER MATH (Auto-Render global)
-   ======================================== */
+/* ---------- AUTO-RENDER MATH ---------- */
 function renderAllMath() {
   try {
     renderMathInElement(contentArea, {
@@ -217,9 +206,7 @@ function renderAllMath() {
   }
 }
 
-/* ========================================
-   COPY
-   ======================================== */
+/* ---------- COPY TO CLIPBOARD ---------- */
 function copyLatex(text) {
   navigator.clipboard.writeText(text).then(showToast).catch(() => {
     const ta = document.createElement('textarea');
@@ -236,9 +223,7 @@ function showToast() {
   toast._t = setTimeout(() => toast.classList.remove('visible'), 2500);
 }
 
-/* ========================================
-   SEARCH
-   ======================================== */
+/* ---------- SEARCH / FILTER ---------- */
 function handleSearch() {
   const q = searchInput.value.trim().toLowerCase();
   clearBtn.classList.toggle('hidden', !q);
@@ -252,13 +237,13 @@ function handleSearch() {
 
   searchCount.textContent = q ? `${count} résultat${count !== 1 ? 's' : ''}` : '';
 
-  // No results message
+  // Message "Aucun résultat"
   let nr = document.querySelector('.no-results');
   if (!count && q) {
     if (!nr) {
       nr = document.createElement('div');
       nr.className = 'no-results';
-      nr.innerHTML = `<span class="emoji">🔍</span><p>Aucune formule trouvée</p>`;
+      nr.innerHTML = `<span class="emoji">🔍</span><p>Aucune formule trouvée pour « ${searchInput.value} »</p>`;
       contentArea.appendChild(nr);
     }
   } else if (nr) {
@@ -269,9 +254,7 @@ function handleSearch() {
 searchInput.addEventListener('input', handleSearch);
 clearBtn.addEventListener('click', () => { searchInput.value = ''; handleSearch(); searchInput.focus(); });
 
-/* ========================================
-   THEME
-   ======================================== */
+/* ---------- THEME TOGGLE ---------- */
 function initTheme() {
   const saved = localStorage.getItem('theme');
   if (saved) { document.documentElement.setAttribute('data-theme', saved); }
@@ -286,17 +269,13 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-/* ========================================
-   KEYBOARD SHORTCUTS
-   ======================================== */
+/* ---------- KEYBOARD SHORTCUTS ---------- */
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); searchInput.select(); }
   if (e.key === 'Escape') { searchInput.value = ''; handleSearch(); searchInput.blur(); }
 });
 
-/* ========================================
-   INIT
-   ======================================== */
+/* ---------- INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   renderTabs();
